@@ -1,15 +1,15 @@
 # rawrcat v1.0
-# 'main.py' -> primary runtime logic and initial execution call -> v1.2
+# 'main.py' -> primary runtime logic and initial execution call -> v1.6
 # python version 3.13.5
 # dependencies:
-#  global -> 'os' 'rsa' 'pycrypto' 'pycryptodome' 'colorama' 'platform' 'pathlib'
+#  global -> 'os' 'rsa' 'pycrypto' 'pycryptodome' 'colorama' 'platform' 'pathlib' 'uuid'
 #  local-packages -> 'iomgr' 'pkcs1_oaep'
-#  self -> 'os' 'platform'
+#  self -> 'os' 'platform' 'uuid'
 # [!] some local packages require dependencies that are obsolete and have been deprecated
 # [!] undefined exception handling rules
 
 # import dependencies
-import os, platform
+import os, platform, uuid
 
 # import local packages
 from lib import pkcs1_oaep as cryptography
@@ -24,10 +24,14 @@ xcnsl.log('\n\ninitializing...', 3, "\n\n\n                       _,-'""`-._    
 
 # initialization script 
 ostype = str(platform.system().lower())
-xcnsl.log(str('set ostype = \'' + str(ostype) + '\''))
+xcnsl.log(str('ostype = \'' + str(ostype) + '\''))
 
+# attempt to locate *.pem keyfiles
 if cryptography.keyman.scandir(os.getcwd()) == False:
-    xcnsl.log('no key files were found in current directory')
-
-
-
+    xcnsl.log('no keys were found in the active directory\n ..> ' + str(os.getcwd()))
+    next = xcnsl.update('set key file target directory or press <enter> to create a new rsa key pair')
+    if next == True:
+        xcnsl.log('', 5, 'creating new keys:')
+        publickey_path = xcnsl.input('set public key target')
+        privatekey_path = xcnsl.input('set private key target')
+        cryptography.keyman.newkey(publickey_path, privatekey_path, uuid.uuid4().hex, uuid.uuid4().hex)

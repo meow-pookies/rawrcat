@@ -1,5 +1,5 @@
 # rawrcat v1.0
-# 'iomgr.py' -> command line iostream manager -> v1.1
+# 'iomgr.py' -> command line iostream manager -> v1.3
 # shell text formatting and iostream handling
 # python version 3.13.5
 # dependencies: 'colorama' 'os' 'platform'
@@ -68,6 +68,14 @@ class iostream:
             return input(textcolor.concatenate_colortext_text(color, header, msg))
         else:
             return input(str(msg))
+
+    # method 'update' - return updated field data or true if no update made
+    def update(prompt, color=0, header=''):
+        choose_update = iostream.input(prompt)
+        if choose_update == '' or choose_update == None:
+            return True
+        return choose_update
+
 
 # object 'shell' { (takes no parameters) -> null }
 class shell:

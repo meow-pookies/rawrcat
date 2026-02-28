@@ -9,5 +9,6 @@ line4 = "  ^^^^^^^^^^^^^^^^^^^^^^  "
 
 #print(line0)
 
-import platform
-print(platform.system())
+import uuid
+value = uuid.uuid4().hex
+print(value)
