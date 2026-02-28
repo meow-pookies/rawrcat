@@ -35,3 +35,8 @@ if cryptography.keyman.scandir(os.getcwd()) == False:
         publickey_path = xcnsl.input('set public key target')
         privatekey_path = xcnsl.input('set private key target')
         cryptography.keyman.newkey(publickey_path, privatekey_path, uuid.uuid4().hex, uuid.uuid4().hex)
+    else:
+        if os.path.exists(next):
+            if cryptography.keyman.scandir(next) == False:
+                pass
+# requires loop
